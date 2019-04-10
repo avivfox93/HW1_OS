@@ -62,7 +62,8 @@ int main(int argv, const char* args[])
 		// Parent
 		else
 		{
-			wait(NULL);
+			for(j = 0 ; j < 3 ; j++)
+				wait(NULL);
 			read(in_pipe[READ],results,3);
 			close(in_pipe[READ]);
 			close(in_pipe[WRITE]);

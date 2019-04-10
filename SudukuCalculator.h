@@ -9,7 +9,7 @@
 #define SUDUKUCALCULATOR_H_
 
 #define SUDUKU_SIZE 	81
-#define FILE_CHARS SUDUKU_SIZE*2
+#define FILE_CHARS 		2*SUDUKU_SIZE
 #define SUDUKU_RAW_SIZE	9
 
 #define ROWS_CHECK 	0
