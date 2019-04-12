@@ -10,7 +10,7 @@
 
 char suduku_is_legal(const int* suduku, char type)
 {
-	int i,j,k;
+	int i,j,k,l;
 	unsigned int counter;
 	switch(type)
 	{
@@ -33,14 +33,15 @@ char suduku_is_legal(const int* suduku, char type)
 		}
 		break;
 	case BLOCK_CHECK:
-		for(i = 0 ; i < 9 ; i++)
-		{
+		for(i = 0 ; i < 3 ; i++)
+			for(l = 0 ; l < 3 ; l++)
+			{
 			for(j = 0 , counter = 0 ; j < 3 ; j++)
 				for(k = 0 ; k < 3 ; k++)
-					counter |= 1 << suduku[i*3 + j*9 + k];
+					counter |= 1 << suduku[i*27 + l*3 + j*9 + k];
 			if(counter != RES_OK)
-				return counter;
-		}
+					return counter;
+			}
 		break;
 	}
 	return 1;
