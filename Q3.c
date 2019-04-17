@@ -44,9 +44,7 @@ int main(int argv, const char* args[])
 	int reader,i;
 	pthread_t threads[NUM_OF_THREADS];
 
-	reader = argv > 1 ? open(args[1],O_RDONLY) : STDIN_FILENO;
-	reader = reader < 0 ? STDIN_FILENO : reader;
-	check_error(reader);
+	check_error(reader = argv > 1 ? open(args[1],O_RDONLY) : STDIN_FILENO);
 	check_error(read(reader,raw_sud,SUDUKU_SIZE*2));
 	char_to_int_suduku(raw_sud,data.arr);
 

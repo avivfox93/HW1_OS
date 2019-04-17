@@ -21,9 +21,6 @@ typedef struct
 	char 	res[3];
 }suduku_t;
 
-int wallak[] = {1,2,3};
-char str[] = {'a','v','i','v'};
-
 int main(int argv, const char* args[])
 {
 	char suduku[FILE_CHARS],res;

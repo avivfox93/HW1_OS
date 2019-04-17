@@ -8,7 +8,7 @@
 #ifndef ERROR_HANDLING_H_
 #define ERROR_HANDLING_H_
 
-#define _ERROR_MSG "Pipe Failed!"
+#define _ERROR_MSG "Fatal Failed!\n"
 
 void check_error(int err)
 {
