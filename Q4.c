@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include "SudukuCalculator.h"
+#include "error_handling.h"
 
 #define NUM_OF_TASKS 	27
 #define N				7
@@ -56,20 +57,20 @@ void* thread_action(void* args)
 	task_t* task;
 	while(1)
 	{
-		pthread_mutex_lock(&tasks_lock);
+		check_error(pthread_mutex_lock(&tasks_lock));
 		if(mission.task_index >= NUM_OF_TASKS)
 		{
-			pthread_mutex_unlock(&tasks_lock);
+			check_error(pthread_mutex_unlock(&tasks_lock));
 			break;
 		}
 		task = mission.tasks[mission.task_index++];
-		pthread_mutex_unlock(&tasks_lock);
+		check_error(pthread_mutex_unlock(&tasks_lock));
 		res = suduku_thread(task);
-		pthread_mutex_lock(&result_lock);
+		check_error(pthread_mutex_lock(&result_lock));
 		mission.result += res;
 		mission.finished++;
-		pthread_cond_signal(&cond);
-		pthread_mutex_unlock(&result_lock);
+		check_error(pthread_cond_signal(&cond));
+		check_error(pthread_mutex_unlock(&result_lock));
 	}
 	return NULL;
 }
@@ -86,7 +87,7 @@ int main(int argv, const char* args[])
 	reader = argv > 1 ? open(args[1],O_RDONLY) : STDIN_FILENO;
 	reader = reader < 0 ? STDIN_FILENO : reader;
 
-	read(reader,raw_sud,SUDUKU_SIZE*2);
+	check_error(read(reader,raw_sud,SUDUKU_SIZE*2));
 	char_to_int_suduku(raw_sud,data.arr);
 
 	for(i = 0; i < SUDUKU_RAW_SIZE ; i++)
@@ -100,15 +101,15 @@ int main(int argv, const char* args[])
 		mission.tasks[i*3 + 1] = b;
 		mission.tasks[i*3 + 2] = c;
 	}
-	pthread_mutex_init(&tasks_lock,NULL); pthread_mutex_init(&result_lock,NULL);
-	pthread_cond_init(&cond,NULL);
+	check_error(pthread_mutex_init(&tasks_lock,NULL)); check_error(pthread_mutex_init(&result_lock,NULL));
+	check_error(pthread_cond_init(&cond,NULL));
 	for(i = 0 ; i < N ; i++)
-		pthread_create(&threads[i],NULL,thread_action,NULL);
-	pthread_mutex_lock(&result_lock);
+		check_error(pthread_create(&threads[i],NULL,thread_action,NULL));
+	check_error(pthread_mutex_lock(&result_lock));
 	while(mission.finished != NUM_OF_TASKS)
-		pthread_cond_wait(&cond,&result_lock);
-	pthread_mutex_unlock(&result_lock);
+		check_error(pthread_cond_wait(&cond,&result_lock));
+	check_error(pthread_mutex_unlock(&result_lock));
 	for(i = 0 ; i < N ; i++)
-		pthread_join(threads[i],NULL);
+		check_error(pthread_join(threads[i],NULL));
 	printf(mission.result == NUM_OF_TASKS ? "solution is legal\n" : "solution is not legal\n");
 }

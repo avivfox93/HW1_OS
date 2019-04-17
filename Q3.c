@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include "SudukuCalculator.h"
+#include "error_handling.h"
 
 #define NUM_OF_THREADS 	27
 
@@ -45,8 +46,8 @@ int main(int argv, const char* args[])
 
 	reader = argv > 1 ? open(args[1],O_RDONLY) : STDIN_FILENO;
 	reader = reader < 0 ? STDIN_FILENO : reader;
-
-	read(reader,raw_sud,SUDUKU_SIZE*2);
+	check_error(reader);
+	check_error(read(reader,raw_sud,SUDUKU_SIZE*2));
 	char_to_int_suduku(raw_sud,data.arr);
 
 	for(i = 0; i < SUDUKU_RAW_SIZE ; i++)
@@ -56,12 +57,12 @@ int main(int argv, const char* args[])
 		a->index = i; 				a->sud_index = i; 						a->type = COLS_CHECK;
 		b->index = i+9;				b->sud_index = i*9;						b->type = ROWS_CHECK;
 		c->index = i+18;			c->sud_index = ((i/3)*27)+((i%3)*3);	c->type = BLOCK_CHECK;
-		pthread_create(&threads[i],		NULL,suduku_thread,(void*)a);
-		pthread_create(&threads[i+9],	NULL,suduku_thread,(void*)b);
-		pthread_create(&threads[i+18],	NULL,suduku_thread,(void*)c);
+		check_error(pthread_create(&threads[i],		NULL,suduku_thread,(void*)a));
+		check_error(pthread_create(&threads[i+9],	NULL,suduku_thread,(void*)b));
+		check_error(pthread_create(&threads[i+18],	NULL,suduku_thread,(void*)c));
 	}
 	for(i = 0 ; i < NUM_OF_THREADS ; i++)
-		pthread_join(threads[i],NULL);
+		check_error(pthread_join(threads[i],NULL));
 	for(i = 0, result = 1 ; i < NUM_OF_THREADS ; i++)
 		result &= data.res[i];
 	printf(result ? "solution is legal\n" : "solution is not legal\n");
