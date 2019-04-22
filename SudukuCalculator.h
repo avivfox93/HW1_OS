@@ -18,10 +18,12 @@
 
 #define RES_OK 0b1111111110
 
+#define NUM_OF_PROC	3
+
 #define CALCULATE_PATH "./SudukuCalculatorProg"
 
-char suduku_is_legal(const int* suduku, char type);
-char suduku_part_is_legal(const int* part, char type);
-void char_to_int_suduku(const char* in, int* out);
+char suduku_is_legal(const char* suduku, char type);
+char suduku_part_is_legal(const char* part, char type);
+void char_to_int_suduku(const char* in, char* out);
 
 #endif /* SUDUKUCALCULATOR_H_ */

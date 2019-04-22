@@ -17,7 +17,7 @@
 
 typedef struct
 {
-	int		arr[SUDUKU_SIZE];
+	char	arr[SUDUKU_SIZE];
 	char 	res[NUM_OF_THREADS];
 }suduku_t;
 

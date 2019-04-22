@@ -17,7 +17,7 @@
 
 typedef struct
 {
-	int		arr[81];
+	char	arr[81];
 	char 	res[3];
 }suduku_t;
 
@@ -27,7 +27,7 @@ int main(int argv, const char* args[])
 	suduku_t* data_mem;
 	int i,j,pid,sud_in = -1;
 	data_mem = mmap(NULL,sizeof(suduku_t),PROT_READ|PROT_WRITE,MAP_SHARED|MAP_ANONYMOUS,-1,0);
-	if(!data_mem)
+	if(data_mem < 0)
 		check_error(-1);
 	if(argv <= 1)
 	{
@@ -40,7 +40,7 @@ int main(int argv, const char* args[])
 			check_error(sud_in = open(args[i],O_RDONLY));
 		check_error(read(sud_in,suduku,FILE_CHARS));
 		char_to_int_suduku(suduku,data_mem->arr);
-		for(j = 0 ; j < 3 ; j++)
+		for(j = 0 ; j < NUM_OF_PROC ; j++)
 			// Child
 			if(!(pid = fork()))
 			{
@@ -50,7 +50,8 @@ int main(int argv, const char* args[])
 			// Parent
 			else
 				check_error(pid);
-		wait(NULL);
+		for(j = 0 ; j < NUM_OF_PROC ; j++)
+			wait(NULL);
 		res = data_mem->res[0] && data_mem->res[1] && data_mem->res[2];
 		printf(res ? "%s is legal\n" : "%s is not legal\n",
 				(sud_in != STDIN_FILENO) ? args[i] : "STD_ID");

@@ -8,7 +8,7 @@
 #include <sys/unistd.h>
 #include "SudukuCalculator.h"
 
-char suduku_is_legal(const int* suduku, char type)
+char suduku_is_legal(const char* suduku, char type)
 {
 	int i,j,k,l;
 	unsigned int counter;
@@ -47,7 +47,7 @@ char suduku_is_legal(const int* suduku, char type)
 	return 1;
 }
 
-char suduku_part_is_legal(const int* part, char type)
+char suduku_part_is_legal(const char* part, char type)
 {
 	int i,j;
 	unsigned int counter;
@@ -71,7 +71,7 @@ char suduku_part_is_legal(const int* part, char type)
 	return counter == RES_OK;
 }
 
-void char_to_int_suduku(const char* in, int* out)
+void char_to_int_suduku(const char* in, char* out)
 {
 	int i,j;
 	for(i = 0, j = 0 ; i < SUDUKU_SIZE ; i++,j+=2)

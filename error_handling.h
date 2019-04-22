@@ -8,6 +8,9 @@
 #ifndef ERROR_HANDLING_H_
 #define ERROR_HANDLING_H_
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #define _ERROR_MSG "Fatal Failed!\n"
 
 void check_error(int err)

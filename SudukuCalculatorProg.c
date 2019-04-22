@@ -7,6 +7,7 @@
 
 #include <sys/unistd.h>
 #include "SudukuCalculator.h"
+#include "error_handling.h"
 
 #define SUDUKU_SIZE 81
 
@@ -14,10 +15,13 @@
 
 int main(int args, const char* argv[])
 {
-	char res = 0;
-	int suduku[SUDUKU_SIZE] = {0};
-	read(STDIN_FILENO, suduku, sizeof(int)*SUDUKU_SIZE);
-	res = args > 0 ? suduku_is_legal(suduku,*argv[0]-'0') : 0;
-	write(STDOUT_FILENO,&res,1);
-	return res;
+	for(;;)
+	{
+		char res = 0;
+		char suduku[SUDUKU_SIZE] = {0};
+		check_error(read(STDIN_FILENO, suduku, SUDUKU_SIZE));
+		res = args > 1 ? suduku_is_legal(suduku,*(argv[1])-'0') : 0;
+		check_error(write(STDOUT_FILENO,&res,1));
+	}
+	return 0;
 }
