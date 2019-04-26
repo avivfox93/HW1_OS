@@ -22,7 +22,7 @@ int main(int argc, const char* argv[])
 {
 	char suduku[FILE_CHARS], final_suduku[81], results[3] = {0}, result = 0;
 	int in_pipe[2], out_pipe[6];
-	int pid,i,j;
+	int pid[3] = {0},i,j;
 	int sud_in= -1;
 
 	check_error(pipe(in_pipe));
@@ -31,9 +31,9 @@ int main(int argc, const char* argv[])
 	{
 		check_error(pipe(out_pipe + i*2));
 		// Parent
-		if((pid = fork()))
+		if((pid[i] = fork()))
 		{
-			check_error(pid);
+			check_error(pid[i]);
 			check_error(close(out_pipe[i*2 + READ]));
 		}
 		// Child
@@ -80,7 +80,13 @@ int main(int argc, const char* argv[])
 			(sud_in != STDIN_FILENO) ? argv[i] : "STD_ID");
 	}
 	for(i = 0 ; i < NUM_OF_PROC ; i++)
+	{
 		check_error(close(out_pipe[i*2 + WRITE]));
+		kill(pid[i],1);
+	}
+	// Make sure all the children are dead and there are no zombies
+	for(i = 0 ; i < NUM_OF_PROC ; i++)
+		wait(NULL);
 	check_error(close(in_pipe[READ]));
 	return 0;
 }
