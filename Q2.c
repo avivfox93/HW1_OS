@@ -57,9 +57,16 @@ int main(int argc, const char* argv[])
 	}
 	for(i = 1 ; i < argc ; i++)
 	{
-		if(sud_in != STDIN_FILENO)
-			check_error(sud_in = open(argv[i],O_RDONLY),argv[0],OPEN_ERR);
-		check_error(read(sud_in,suduku,FILE_CHARS),argv[0],READ_ERR);
+		if(sud_in != STDIN_FILENO && (sud_in = open(argv[i],O_RDONLY)) < 0)
+		{
+			data_mem->die = 1;
+			check_error(sud_in,argv[0],OPEN_ERR);
+		}
+		if(read(sud_in,suduku,FILE_CHARS) < 0)
+		{
+			data_mem->die = 1;
+			check_error(-1,argv[0],READ_ERR);
+		}
 		char_to_int_suduku(suduku,data_mem->arr);
 		data_mem->ready = 1;
 		for(j = 0 ; j < NUM_OF_PROC ; j++)
@@ -69,8 +76,7 @@ int main(int argc, const char* argv[])
 		printf(res ? "%s is legal\n" : "%s is not legal\n",
 				(sud_in != STDIN_FILENO) ? argv[i] : "STD_ID");
 	}
-	for(i = 0 ; i < NUM_OF_PROC ; i++)
-		kill(pid[i],1);
+	data_mem->die = 1;
 	// Make sure there are no survivors...
 	for(i = 0 ; i < NUM_OF_PROC ; i++)
 		wait(NULL);
