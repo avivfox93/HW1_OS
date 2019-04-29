@@ -95,6 +95,8 @@ int main(int argc, const char* argv[])
 	{
 		task_t *a,*b,*c;
 		a = malloc(sizeof(task_t)); b = malloc(sizeof(task_t)); c = malloc(sizeof(task_t));
+		if(!a | !b | !c)
+			check_error(-1,argv[0],MEM_ALLOC_ERR);
 		a->index = i; 				a->sud_index = i; 						a->type = COLS_CHECK;
 		b->index = i+9;				b->sud_index = i*9;						b->type = ROWS_CHECK;
 		c->index = i+18;			c->sud_index = ((i/3)*27)+((i%3)*3);	c->type = BLOCK_CHECK;
