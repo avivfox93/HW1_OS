@@ -15,13 +15,15 @@
 
 int main(int args, const char* argv[])
 {
-	for(;;)
+	char res,i;
+	for(res = 0;;)
 	{
-		char res = 0;
 		char suduku[SUDUKU_SIZE] = {0};
-		check_error(read(STDIN_FILENO, suduku, SUDUKU_SIZE));
+		check_error((i = read(STDIN_FILENO, suduku, SUDUKU_SIZE)),argv[0],READ_ERR);
+		if(i == 0)
+			return 0;
 		res = args > 1 ? suduku_is_legal(suduku,*(argv[1])-'0') : 0;
-		check_error(write(STDOUT_FILENO,&res,1));
+		check_error(write(STDOUT_FILENO,&res,1),argv[0],WRITE_ERR);
 	}
 	return 0;
 }
