@@ -12,7 +12,6 @@
 #include <sys/mman.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include <string.h>
 #include "SudukuCalculator.h"
 #include "error_handling.h"
 
@@ -31,9 +30,8 @@ int main(int argc, const char* argv[])
 	suduku_t* data_mem;
 	int i,j,pid[3] = {0},sud_in = -1;
 	data_mem = mmap(NULL,sizeof(suduku_t),PROT_READ|PROT_WRITE,MAP_SHARED|MAP_ANONYMOUS,-1,0);
-	if(data_mem < 0)
+	if(data_mem <= 0)
 		check_error(-1,argv[0],MMAP_ERR);
-	memset(data_mem,0,sizeof(suduku_t));
 	for(i = 0 ; i < NUM_OF_PROC ; i++)
 	{
 		// Child

@@ -1,5 +1,5 @@
 
-all: Q1 Q2 Q3 Q4 SudukuCalculatorProg
+all: clean Q1 Q2 Q3 Q4 SudukuCalculatorProg
 
 Q1:
 	gcc -o Q1 Q1.c SudukuCalculator.c
