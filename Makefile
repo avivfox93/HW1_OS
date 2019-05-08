@@ -1,8 +1,10 @@
 
-all: clean Q1 Q2 Q3 Q4 SudukuCalculatorProg
+all: clean Q1 Q1b Q2 Q3 Q4 SudukuCalculatorProg
 
 Q1:
 	gcc -o Q1 Q1.c SudukuCalculator.c
+Q1b:
+	gcc -o Q1b Q1b.c SudukuCalculator.c -lrt
 Q2:
 	gcc -o Q2 Q2.c SudukuCalculator.c
 Q3:
@@ -14,4 +16,4 @@ SudukuCalculatorProg:
 	gcc -o SudukuCalculatorProg SudukuCalculatorProg.c SudukuCalculator.c
 
 clean:
-	rm -f Q1 Q2 Q3 Q4 SudukuCalculatorProg
+	rm -f Q1 Q1b Q2 Q3 Q4 SudukuCalculatorProg

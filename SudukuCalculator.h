@@ -20,6 +20,8 @@
 
 #define NUM_OF_PROC	3
 
+#define QUEUE_ANS 	"suduku_answers.txt"
+#define QUEUE_OUT	"suduku_out.txt"
 #define CALCULATE_PATH "./SudukuCalculatorProg"
 
 char suduku_is_legal(const char* suduku, char type);

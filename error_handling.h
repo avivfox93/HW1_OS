@@ -10,8 +10,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
 
-#define _ERROR_MSG "%s: %s Error!\n"
+#define _ERROR_MSG "%s: %s Error! errno: %d\n"
 
 #define PIPE_ERR			0
 #define FORK_ERR			1
@@ -32,6 +33,12 @@
 #define COND_INIT_ERR		16
 #define COND_WAIT_ERR		17
 #define COND_SIG_ERR		18
+#define QUEUE_OPEN_ERR		19
+#define QUEUE_GETATTR_ERR	20
+#define QUEUE_RECV_ERR		21
+#define QUEUE_CLOSE_ERR		22
+#define QUEUE_SEND_ERR		23
+#define QUEUE_UNLINK_ERR	24
 
 void check_error(int err, const char* name, char reason)
 {
@@ -54,11 +61,17 @@ void check_error(int err, const char* name, char reason)
 			"Mutex Unlock",
 			"Condition Init",
 			"Condition Wait",
-			"Condition Signal"
+			"Condition Signal",
+			"Queue Open",
+			"Queue Get Attributes",
+			"Queue Receive",
+			"Queue Close",
+			"Queue Send",
+			"Queue Unlink"
 	};
 	if(err >= 0)
 		return;
-	fprintf(stderr,_ERROR_MSG, name, MSG[reason]);
+	fprintf(stderr,_ERROR_MSG, name, MSG[reason], errno);
 	exit(err);
 }
 
