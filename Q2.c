@@ -1,11 +1,3 @@
-/*
- * Main.c
- *
- *  Created on: Apr 5, 2019
- *      Author: aviv
- */
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>

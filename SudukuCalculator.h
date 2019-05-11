@@ -1,10 +1,3 @@
-/*
- * SudukuCalculator.h
- *
- *  Created on: Apr 5, 2019
- *      Author: aviv
- */
-
 #ifndef SUDUKUCALCULATOR_H_
 #define SUDUKUCALCULATOR_H_
 

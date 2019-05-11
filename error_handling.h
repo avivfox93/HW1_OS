@@ -1,10 +1,3 @@
-/*
- * error_handling.h
- *
- *  Created on: Apr 17, 2019
- *      Author: aviv
- */
-
 #ifndef ERROR_HANDLING_H_
 #define ERROR_HANDLING_H_
 

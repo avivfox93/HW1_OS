@@ -1,9 +1,3 @@
-/*
- * Q1b.c
- *
- *  Created on: May 8, 2019
- *      Author: aviv
- */
 #include <sys/unistd.h>
 #include <mqueue.h>
 #include <stdlib.h>
@@ -24,8 +18,9 @@ int main(int argc, const char* argv[])
 	struct mq_attr in_attr = {0}, out_attr = {0};
 	char result, final_result, suduku[FILE_CHARS], buff[SUDUKU_SIZE];
 
-	for(i = 0 ; i < NUM_OF_PROC ; i++)
+	for(i = 0; i < NUM_OF_PROC ; i++)
 	{
+		//Child
 		if(!(pid = fork()))
 		{
 			in_attr.mq_msgsize = SUDUKU_SIZE; out_attr.mq_msgsize = 1; in_attr.mq_maxmsg = 10; out_attr.mq_maxmsg = 10;

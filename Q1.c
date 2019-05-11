@@ -1,10 +1,3 @@
-/*
- * Main.c
- *
- *  Created on: Apr 3, 2019
- *      Author: aviv
- */
-
 #include <sys/unistd.h>
 #include <sys/wait.h>
 #include <fcntl.h>

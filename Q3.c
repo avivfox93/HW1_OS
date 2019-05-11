@@ -1,10 +1,3 @@
-/*
- * Main_Threads.c
- *
- *  Created on: Apr 7, 2019
- *      Author: aviv
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>

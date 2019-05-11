@@ -1,10 +1,3 @@
-/*
- * Main.c
- *
- *  Created on: Apr 4, 2019
- *      Author: aviv
- */
-
 #include <sys/unistd.h>
 #include "SudukuCalculator.h"
 
@@ -40,7 +33,7 @@ char suduku_is_legal(const char* suduku, char type)
 					for(k = 0 ; k < 3 ; k++)
 						counter |= 1 << suduku[i*27 + l*3 + j*9 + k];
 				if(counter != RES_OK)
-						return counter;
+					return 0;
 			}
 		break;
 	}
