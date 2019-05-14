@@ -63,13 +63,13 @@ int main(int argc, const char* argv[])
 			check_error(mq_receive(mq_in_id,&result,1,0),argv[0],QUEUE_RECV_ERR);
 			final_result &= result;
 		}
-		printf(result ? "%s is legal\n" : "%s is not legal\n",
+		printf(final_result ? "%s is legal\n" : "%s is not legal\n",
 					(sud_in != STDIN_FILENO) ? argv[i] : "STD_ID");
 	}
 	for(i = 0, buff[0] = 0 ; i < NUM_OF_PROC ; i++)
 		check_error(mq_send(mq_out_id,buff,1,0),argv[0],QUEUE_SEND_ERR);
-	check_error(mq_close(mq_out_id),argv[0],QUEUE_CLOSE_ERR);
-	check_error(mq_close(mq_in_id),argv[0],QUEUE_CLOSE_ERR);
 	check_error(mq_unlink(QUEUE_RES_FILE),argv[0],QUEUE_UNLINK_ERR);
 	check_error(mq_unlink(QUEUE_FILE),argv[0],QUEUE_UNLINK_ERR);
+	check_error(mq_close(mq_out_id),argv[0],QUEUE_CLOSE_ERR);
+	check_error(mq_close(mq_in_id),argv[0],QUEUE_CLOSE_ERR);
 }
